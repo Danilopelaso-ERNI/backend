@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        // Do not expose Password in DTOs for security reasons
     }
 
     public class CreateUserDto

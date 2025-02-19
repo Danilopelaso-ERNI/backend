@@ -52,7 +52,7 @@ namespace backend.Controllers
             var user = new User
             {
                 Username = createUserDto.Username,
-                Password = createUserDto.Password // Ensure to hash the password
+                Password = createUserDto.Password 
             };
 
             _context.Users.Add(user);
@@ -75,7 +75,7 @@ namespace backend.Controllers
             }
 
             user.Username = updateUserDto.Username;
-            user.Password = updateUserDto.Password; // Ensure to hash the password
+            user.Password = updateUserDto.Password; 
 
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
