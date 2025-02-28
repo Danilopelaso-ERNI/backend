@@ -1,8 +1,12 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using YourProjectName.Models;
 
 namespace backend.Controllers
@@ -19,6 +23,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuestions()
         {
             return await _context.Questions
@@ -31,7 +36,7 @@ namespace backend.Controllers
                     Answers = question.Answers.Select(answer => new AnswerDto
                     {
                         Id = answer.Id,
-                        QuestionId = answer.QuestionId, 
+                        QuestionId = answer.QuestionId,
                         Text = answer.Text,
                         IsCorrect = answer.IsCorrect
                     }).ToList()
@@ -40,6 +45,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
         public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
             var question = await _context.Questions
@@ -67,6 +73,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
         public async Task<ActionResult<QuestionDto>> CreateQuestion(CreateQuestionDto createQuestionDto)
         {
             var question = new Question
@@ -91,7 +98,7 @@ namespace backend.Controllers
                 Answers = question.Answers.Select(a => new AnswerDto
                 {
                     Id = a.Id,
-                    QuestionId = a.QuestionId, 
+                    QuestionId = a.QuestionId,
                     Text = a.Text,
                     IsCorrect = a.IsCorrect
                 }).ToList()
@@ -99,6 +106,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
         public async Task<IActionResult> UpdateQuestion(int id, UpdateQuestionDto updateQuestionDto)
         {
             var question = await _context.Questions.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == id);
@@ -127,6 +135,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
         public async Task<IActionResult> DeleteQuestion(int id)
         {
             var question = await _context.Questions.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == id);

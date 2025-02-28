@@ -1,8 +1,13 @@
 ﻿using backend.Data;
 using backend.DTOs;
 using backend.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BCrypt.Net; // Make sure to include this namespace
 
 namespace backend.Controllers
 {
@@ -17,7 +22,9 @@ namespace backend.Controllers
             _context = context;
         }
 
+        // Allow only users with the "Examiner" role to access this action
         [HttpGet]
+        [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return await _context.Users
@@ -29,7 +36,9 @@ namespace backend.Controllers
                 .ToListAsync();
         }
 
+        // Allow only users with the "Examiner" role to access this action
         [HttpGet("{id}")]
+        [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -47,12 +56,17 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
         {
+            // Hash the password before saving
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(createUserDto.Password);
+
             var user = new User
             {
                 Username = createUserDto.Username,
-                Password = createUserDto.Password 
+                Password = hashedPassword, // Store the hashed password
+                Role = createUserDto.Role
             };
 
             _context.Users.Add(user);
@@ -66,6 +80,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Examiner")]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
             var user = await _context.Users.FindAsync(id);
@@ -75,7 +90,11 @@ namespace backend.Controllers
             }
 
             user.Username = updateUserDto.Username;
-            user.Password = updateUserDto.Password; 
+            if (!string.IsNullOrEmpty(updateUserDto.Password))
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(updateUserDto.Password); // Hash the new password
+            }
+            user.Role = updateUserDto.Role;
 
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -84,6 +103,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Examiner")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);

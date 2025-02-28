@@ -343,3 +343,11 @@ C:\Users\extpeda\Downloads\New folder\backend\backend\obj\Debug\net8.0\refint\ba
 C:\Users\extpeda\Downloads\New folder\backend\backend\obj\Debug\net8.0\backend.pdb
 C:\Users\extpeda\Downloads\New folder\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\Users\extpeda\Downloads\New folder\backend\backend\obj\Debug\net8.0\ref\backend.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\xunit.abstractions.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\xunit.assert.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\xunit.core.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\xunit.execution.dotnet.dll
+C:\Users\extpeda\Downloads\New folder\backend\backend\bin\Debug\net8.0\BCrypt.Net-Next.dll
