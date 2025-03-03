@@ -22,7 +22,7 @@
             }
 
             [HttpGet]
-            [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
+            [Authorize(Roles = "Examiner, Examinee")] 
             public async Task<ActionResult<IEnumerable<AnswerDto>>> GetAnswers()
             {
                 return await _context.Answers
@@ -37,7 +37,7 @@
             }
 
             [HttpGet("{id}")]
-            [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
+            [Authorize(Roles = "Examiner, Examinee")] 
             public async Task<ActionResult<AnswerDto>> GetAnswer(int id)
             {
                 var answer = await _context.Answers.FindAsync(id);
@@ -57,7 +57,7 @@
             }
 
             [HttpPost]
-            [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
+            [Authorize(Roles = "Examiner")] 
             public async Task<ActionResult<AnswerDto>> CreateAnswer(CreateAnswerDto createAnswerDto)
             {
                 var answer = new Answer
@@ -80,7 +80,7 @@
             }
 
             [HttpPut("{id}")]
-            [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
+            [Authorize(Roles = "Examiner")] 
             public async Task<IActionResult> UpdateAnswer(int id, UpdateAnswerDto updateAnswerDto)
             {
                 var answer = await _context.Answers.FindAsync(id);
@@ -99,7 +99,7 @@
             }
 
             [HttpDelete("{id}")]
-            [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
+            [Authorize(Roles = "Examiner")] 
             public async Task<IActionResult> DeleteAnswer(int id)
             {
                 var answer = await _context.Answers.FindAsync(id);
