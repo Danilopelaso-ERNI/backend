@@ -27,7 +27,7 @@ namespace backend.Controllers
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
             {
-                return Unauthorized(); // Return 401 if the user is not found or password is incorrect
+                return Unauthorized(); 
             }
 
             var token = _jwtTokenGenerator.GenerateToken(user);
