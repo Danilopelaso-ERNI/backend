@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BCrypt.Net; // Make sure to include this namespace
+using BCrypt.Net; 
 
 namespace backend.Controllers
 {
@@ -22,7 +22,7 @@ namespace backend.Controllers
             _context = context;
         }
 
-        // Allow only users with the "Examiner" role to access this action
+        
         [HttpGet]
         [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
@@ -36,7 +36,7 @@ namespace backend.Controllers
                 .ToListAsync();
         }
 
-        // Allow only users with the "Examiner" role to access this action
+        
         [HttpGet("{id}")]
         [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
@@ -59,13 +59,13 @@ namespace backend.Controllers
         [Authorize(Roles = "Examiner")]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
         {
-            // Hash the password before saving
+          
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(createUserDto.Password);
 
             var user = new User
             {
                 Username = createUserDto.Username,
-                Password = hashedPassword, // Store the hashed password
+                Password = hashedPassword, 
                 Role = createUserDto.Role
             };
 
@@ -92,7 +92,7 @@ namespace backend.Controllers
             user.Username = updateUserDto.Username;
             if (!string.IsNullOrEmpty(updateUserDto.Password))
             {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(updateUserDto.Password); // Hash the new password
+                user.Password = BCrypt.Net.BCrypt.HashPassword(updateUserDto.Password); 
             }
             user.Role = updateUserDto.Role;
 
