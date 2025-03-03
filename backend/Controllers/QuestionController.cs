@@ -23,7 +23,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
+        [Authorize(Roles = "Examiner, Examinee")] 
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetQuestions()
         {
             return await _context.Questions
