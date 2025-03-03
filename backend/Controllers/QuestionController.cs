@@ -45,7 +45,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Examiner, Examinee")] // Allow both Examiner and Examinee roles to access this endpoint
+        [Authorize(Roles = "Examiner, Examinee")] 
         public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
             var question = await _context.Questions
@@ -73,7 +73,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
+        [Authorize(Roles = "Examiner")] 
         public async Task<ActionResult<QuestionDto>> CreateQuestion(CreateQuestionDto createQuestionDto)
         {
             var question = new Question
@@ -106,7 +106,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Examiner")] // Only allow users with the Examiner role to access this endpoint
+        [Authorize(Roles = "Examiner")]
         public async Task<IActionResult> UpdateQuestion(int id, UpdateQuestionDto updateQuestionDto)
         {
             var question = await _context.Questions.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == id);
