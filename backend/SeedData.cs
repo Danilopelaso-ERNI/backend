@@ -15,20 +15,20 @@ namespace backend.Data
             {
                 if (context.Users.Any())
                 {
-                    return;   // DB has been seeded
+                    return;   
                 }
 
                 context.Users.AddRange(
                     new User
                     {
                         Username = "examiner",
-                        Password = BCrypt.Net.BCrypt.HashPassword("password"), // Hash the password
+                        Password = BCrypt.Net.BCrypt.HashPassword("password"), 
                         Role = "Examiner"
                     },
                     new User
                     {
                         Username = "examinee",
-                        Password = BCrypt.Net.BCrypt.HashPassword("password"), // Hash the password
+                        Password = BCrypt.Net.BCrypt.HashPassword("password"), 
                         Role = "Examinee"
                     }
                 );
